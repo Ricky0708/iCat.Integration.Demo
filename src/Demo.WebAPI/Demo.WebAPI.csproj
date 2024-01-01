@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="iCat.Cache" Version="1.0.0" />
+    <PackageReference Include="iCat.Crypto" Version="1.0.0" />
+    <PackageReference Include="iCat.DB.Client.Extension.Web" Version="1.0.2" />
+    <PackageReference Include="iCat.DB.Client.Factory" Version="1.0.1" />
+    <PackageReference Include="iCat.DB.Client.MSSQL" Version="1.0.0" />
+    <PackageReference Include="iCat.Localization.Extension.Web" Version="1.0.2" />
+    <PackageReference Include="iCat.Logger.Extension" Version="1.0.0" />
+    <PackageReference Include="iCat.RabbitMQ" Version="1.0.0" />
+    <PackageReference Include="iCat.Token" Version="1.0.0" />
+    <PackageReference Include="iCat.Token.JWT" Version="1.0.0" />
+    <PackageReference Include="iCat.Worker" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Demo.Services\Demo.Services.csproj" />
+    <ProjectReference Include="..\Demo.Shared\Demo.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
