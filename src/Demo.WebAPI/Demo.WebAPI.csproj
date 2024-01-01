@@ -4,12 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="iCat.Cache" Version="1.0.0" />
@@ -23,6 +19,7 @@
     <PackageReference Include="iCat.Token" Version="1.0.0" />
     <PackageReference Include="iCat.Token.JWT" Version="1.0.0" />
     <PackageReference Include="iCat.Worker" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

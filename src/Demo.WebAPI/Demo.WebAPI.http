@@ -4,3 +4,25 @@ GET {{Demo.WebAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+POST {{Demo.WebAPI_HostAddress}}/login/Cookie
+Content-Type: application/json
+
+{
+  "UserId" : "1"
+}
+
+###
+
+GET {{Demo.WebAPI_HostAddress}}/login/Data
+
+###
+
+POST {{Demo.WebAPI_HostAddress}}/login/JWT
+Content-Type: application/json
+
+{
+  "UserId" : "2"
+}
+
+###

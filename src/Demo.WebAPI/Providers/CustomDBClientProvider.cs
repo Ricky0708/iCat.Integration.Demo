@@ -23,7 +23,7 @@ namespace Demo.WebAPI.Providers
             var tempDic = new Dictionary<string, Func<DBClient>>();
             tempDic.Add(DBName.CompanyA, () => new iCat.DB.Client.MSSQL.DBClient(new DBClientInfo(DBName.CompanyA, "your connection string for companyA")));
             tempDic.Add(DBName.CompanyB, () => new iCat.DB.Client.MSSQL.DBClient(new DBClientInfo(DBName.CompanyA, "your connection string for companyB")));
-            tempDic.Add(DBName.MainDB, () => new iCat.DB.Client.MSSQL.DBClient(new DBClientInfo(DBName.CompanyA, "your connection string for MainDB")));
+            tempDic.Add(DBName.MainDB, () => new iCat.DB.Client.MSSQL.DBClient(new DBClientInfo(DBName.CompanyA, "server=192.168.1.3\\SQL2019;user id=sa;password= P@ssw0rd;initial catalog=A")));
             _dbClients = tempDic;
             return await Task.FromResult("");
         }

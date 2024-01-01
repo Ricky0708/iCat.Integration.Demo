@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Repositories.Interfaces
+namespace Demo.Services.Models
 {
-    public interface IUserRepository
+    public class UserDto : UserDao
     {
-        UserDao? GetUserById(int userId);
     }
 }

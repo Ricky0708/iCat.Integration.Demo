@@ -20,7 +20,7 @@ namespace Demo.WebAPI.Middlewares
             {
                 // Return a 404 to make it appear as if the resource doesn't exist.
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                await context.Response.WriteAsync(string.Empty);
+                await context.Response.WriteAsync("You don't have permission");
                 return;
             }
 
