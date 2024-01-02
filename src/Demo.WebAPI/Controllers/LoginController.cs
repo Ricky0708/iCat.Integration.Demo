@@ -50,7 +50,7 @@ namespace Demo.WebAPI.Controllers
         public async Task<IActionResult> Cookie(LoginViewModel loginViewModel)
         {
 
-            using (var unitOfWork = _dbClientFactory.GetUnitOfWork("key"))
+            using (var unitOfWork = _dbClientFactory.GetUnitOfWork("MainDB"))
             {
                 try
                 {

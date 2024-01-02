@@ -20,7 +20,7 @@ namespace Demo.Repositories.Implements
         }
         public UserDao? GetUserById(int userId)
         {
-            var connection = _dbClientFactory.GetConnection("key");
+            var connection = _dbClientFactory.GetConnection("MainDB");
             var result = default(UserDao);
 
             // Sample - reader
