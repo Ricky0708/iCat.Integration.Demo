@@ -3,6 +3,7 @@ using iCat.DB.Client.Factory.Interfaces;
 using iCat.DB.Client.Implements;
 using iCat.DB.Client.Models;
 using iCat.Worker.Interfaces;
+using Microsoft.Data.SqlClient;
 using Org.BouncyCastle.Crypto.Tls;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,9 @@ namespace Demo.WebAPI.Providers
         public async Task<object?> DoJob(object? obj)
         {
             var tempDic = new Dictionary<string, Func<DBClient>>();
-            tempDic.Add(DBName.CompanyA, () => new iCat.DB.Client.MSSQL.DBClient(new DBClientInfo(DBName.CompanyA, "your connection string for companyA")));
-            tempDic.Add(DBName.CompanyB, () => new iCat.DB.Client.MSSQL.DBClient(new DBClientInfo(DBName.CompanyA, "your connection string for companyB")));
-            tempDic.Add(DBName.MainDB, () => new iCat.DB.Client.MSSQL.DBClient(new DBClientInfo(DBName.CompanyA, "server=192.168.1.3\\SQL2019;user id=sa;password= P@ssw0rd;initial catalog=A")));
+            tempDic.Add(DBName.CompanyA, () => new DBClient(new DBClientInfo(DBName.CompanyA, new SqlConnection("your connection string for companyA"))));
+            tempDic.Add(DBName.CompanyB, () => new DBClient(new DBClientInfo(DBName.CompanyA, new SqlConnection("your connection string for companyB"))));
+            tempDic.Add(DBName.MainDB, () => new DBClient(new DBClientInfo(DBName.CompanyA, new SqlConnection("server=192.168.1.3\\SQL2019;user id=sa;password= P@ssw0rd;initial catalog=A"))));
             _dbClients = tempDic;
             return await Task.FromResult("");
         }

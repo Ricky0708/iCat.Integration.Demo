@@ -12,7 +12,6 @@ using iCat.Crypto.Interfaces;
 using iCat.DB.Client.Extension.Web;
 using iCat.DB.Client.Factory.Interfaces;
 using iCat.DB.Client.Models;
-using iCat.DB.Client.MSSQL;
 using iCat.Localization.Extension.Web;
 using iCat.Localization.Extensions;
 using iCat.Localization.Models;

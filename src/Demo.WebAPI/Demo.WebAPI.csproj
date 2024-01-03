@@ -10,9 +10,9 @@
   <ItemGroup>
     <PackageReference Include="iCat.Cache" Version="1.0.0" />
     <PackageReference Include="iCat.Crypto" Version="1.0.0" />
-    <PackageReference Include="iCat.DB.Client.Extension.Web" Version="1.0.2" />
-    <PackageReference Include="iCat.DB.Client.Factory" Version="1.0.1" />
-    <PackageReference Include="iCat.DB.Client.MSSQL" Version="1.0.0" />
+    <PackageReference Include="iCat.DB.Client" Version="2.0.1" />
+    <PackageReference Include="iCat.DB.Client.Extension.Web" Version="1.1.4" />
+    <PackageReference Include="iCat.DB.Client.Factory" Version="2.0.1" />
     <PackageReference Include="iCat.Localization.Extension.Web" Version="1.0.2" />
     <PackageReference Include="iCat.Logger.Extension" Version="1.0.0" />
     <PackageReference Include="iCat.RabbitMQ" Version="1.0.0" />
