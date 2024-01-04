@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Demo.Shared.enums
 {
     [Flags]
-    public enum Permission
+    public enum DemoPermission
     {
         Add = 1,
         Update = 2,

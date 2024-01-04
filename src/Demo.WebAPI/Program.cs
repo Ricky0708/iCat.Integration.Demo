@@ -133,14 +133,23 @@ namespace Demo.WebAPI
             services.AddScoped<RequestManager>()
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddSingleton<IAuthorizationHandler, DemoHandler>()
+                .AddSingleton<IAuthorizationHandler, AuthorizationPermissionsHandler>()
                 .AddSingleton<IAuthorizationMiddlewareResultHandler, DemoAuthorizationMiddlewareResultHandler>()
                 .AddAuthorization(options =>
                 {
+                    //options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    //.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme, "Bearer")
+                    //.AddRequirements(new DemoRequirement())
+                    //.RequireAuthenticatedUser()
+                    //.Build();
+
+
                     options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                    .AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme, "Bearer")
-                    .AddRequirements(new DemoRequirement())
-                    .RequireAuthenticatedUser()
-                    .Build();
+                        .AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme, "Bearer")
+                        .AddRequirements(new AuthorizationPermissionsRequirement())
+                        .RequireAuthenticatedUser()
+                        .Build();
+
                 })
                 .AddAuthentication()
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>

@@ -23,7 +23,7 @@ namespace Demo.WebAPI.Models
         public string? RequestId => _context.Items["RequestId"]?.ToString();
         public string? UserName => _context.User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.Name)?.Value;
         public int? UserId => int.TryParse(_context.User.Claims.FirstOrDefault(p => p.Type == "UserId")?.Value, out var _userId) ? _userId : null;
-        public Permission Permissions => (Permission)int.Parse(_context.User.Claims.FirstOrDefault(p => p.Type == "Permissions")?.Value!);
+        public DemoPermission Permissions => (DemoPermission)int.Parse(_context.User.Claims.FirstOrDefault(p => p.Type == "Permissions")?.Value!);
 
 
         private Lazy<UserDto?> UserData => new(() => (UserId == null ? null : _userService.GetUserById(UserId.Value)));

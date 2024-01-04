@@ -25,12 +25,13 @@ namespace Demo.WebAPI.Authorizations
                 {
                     var endpoint = httpContext.GetEndpoint();
                     var actionDescriptor = endpoint!.Metadata.GetMetadata<ControllerActionDescriptor>();
+
                     var permissionAttrs = actionDescriptor!
                         .MethodInfo.CustomAttributes.Where(p => p.AttributeType == typeof(DemoAuthorizeAttribute));
-                    var permissionNeeds = permissionAttrs.SelectMany(p => p.ConstructorArguments.SelectMany(x => (ReadOnlyCollection<CustomAttributeTypedArgument>)x.Value!).Select(n => (Permission)n.Value!)).ToList();
+                    var permissionNeeds = permissionAttrs.SelectMany(p => p.ConstructorArguments.SelectMany(x => (ReadOnlyCollection<CustomAttributeTypedArgument>)x.Value!).Select(n => (DemoPermission)n.Value!)).ToList();
                     if (long.TryParse(context.User.Claims.FirstOrDefault(p => p.Type == "Permissions")?.Value, out var requestPermissions))
                     {
-                        if (permissionNeeds.Any(p => ((Permission)requestPermissions).HasFlag(p)))
+                        if (permissionNeeds.Any(p => ((DemoPermission)requestPermissions).HasFlag(p)))
                         {
                             context.Succeed(requirement);
                         }

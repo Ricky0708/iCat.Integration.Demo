@@ -11,6 +11,6 @@ namespace Demo.Repositories.Models
     {
         public int UserId { get; set; }
         public string UserName { get; set; } = "";
-        public Permission Permissions { get; set; }
+        public DemoPermission Permissions { get; set; }
     }
 }

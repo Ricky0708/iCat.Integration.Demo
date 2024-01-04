@@ -34,11 +34,11 @@ namespace Demo.Repositories.Implements
 
             if (userId == 1)
             {
-                result = new UserDao { UserId = 1, UserName = "TestA", Permissions = Shared.enums.Permission.Read | Shared.enums.Permission.Add };
+                result = new UserDao { UserId = 1, UserName = "TestA", Permissions = Shared.enums.DemoPermission.Read | Shared.enums.DemoPermission.Add };
             }
             else if (userId == 2)
             {
-                result = new UserDao { UserId = 1, UserName = "TestA", Permissions = Shared.enums.Permission.Read | Shared.enums.Permission.Update };
+                result = new UserDao { UserId = 1, UserName = "TestA", Permissions = Shared.enums.DemoPermission.Read | Shared.enums.DemoPermission.Update };
             }
 
             return result;

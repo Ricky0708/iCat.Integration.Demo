@@ -11,8 +11,8 @@ namespace Demo.WebAPI.Authorizations
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class DemoAuthorizeAttribute : AuthorizeAttribute
     {
-        public Permission[] Permissions { get; set; }
-        public DemoAuthorizeAttribute(params Permission[] permissions)
+        public DemoPermission[] Permissions { get; set; }
+        public DemoAuthorizeAttribute(params DemoPermission[] permissions)
         {
             this.Permissions = permissions;
         }

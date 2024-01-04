@@ -43,7 +43,8 @@ namespace Demo.WebAPI.Controllers
             _hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
         }
 
-        [DemoAuthorize(Permission.Read)]
+        [DemoAuthorize(DemoPermission.Read)]
+        [AuthorizationPermissions<UserProfilePermission, OrderPermission>(UserProfilePermission.Add, OrderPermission.Read)]
         [HttpGet("[action]")]
         public async Task<IActionResult> AuthorizationData()
         {
@@ -59,14 +60,33 @@ namespace Demo.WebAPI.Controllers
             }));
         }
 
-        [DemoAuthorize(Permission.Read)]
+        [DemoAuthorize(DemoPermission.Read)]
+        //[AuthorizationPermissions(DepartmentPermission.Read | DepartmentPermission.Delete)]
+        //[AuthorizationPermissions<DepartmentPermission>(DepartmentPermission.Edit)]
+        [AuthorizationPermissions<UserProfilePermission, OrderPermission, DepartmentPermission>((UserProfilePermission)int.MaxValue, (OrderPermission)int.MaxValue, (DepartmentPermission)int.MaxValue)]
+        [HttpGet("[action]/{qq}")]
+        public async Task<IActionResult> AuthorizationData(string qq)
+        {
+            var id = _requestManager.UserId;
+            var name = _requestManager.UserName;
+            var permission = _requestManager.Permissions;
+            return await Task.FromResult(Ok(new
+            {
+                RequestId = _requestManager.RequestId,
+                Id = id,
+                Name = name,
+                Permission = permission
+            }));
+        }
+
+        [DemoAuthorize(DemoPermission.Read)]
         [HttpGet("[action]/{key}")]
         public async Task<IActionResult> GetCache(string key)
         {
             return await Task.FromResult(Ok(_cache.GetString(key)));
         }
 
-        [DemoAuthorize(Permission.Read)]
+        [DemoAuthorize(DemoPermission.Read)]
         [HttpGet("[action]/{key}/{value}")]
         public async Task<IActionResult> SetCache(string key, string value)
         {
@@ -74,7 +94,7 @@ namespace Demo.WebAPI.Controllers
             return await Task.FromResult(Ok());
         }
 
-        [DemoAuthorize(Permission.Read)]
+        [DemoAuthorize(DemoPermission.Read)]
         [HttpGet("[action]/{encryptMethod}/{plainText}")]
         public async Task<IActionResult> Encrypt(string encryptMethod, string plainText)
         {
@@ -83,7 +103,7 @@ namespace Demo.WebAPI.Controllers
             return await Task.FromResult(Ok(cryptor.Encrypt(plainText)));
         }
 
-        [DemoAuthorize(Permission.Read)]
+        [DemoAuthorize(DemoPermission.Read)]
         [HttpGet("[action]/{encryptMethod}/{cipherText}")]
         public async Task<IActionResult> Decrypt(string encryptMethod, string cipherText)
         {
@@ -92,7 +112,7 @@ namespace Demo.WebAPI.Controllers
             return await Task.FromResult(Ok(cryptor.Decrypt(cipherText)));
         }
 
-        [DemoAuthorize(Permission.Read)]
+        [DemoAuthorize(DemoPermission.Read)]
         [HttpGet("[action]/{plainText}")]
         public async Task<IActionResult> Hash(string plainText)
         {
