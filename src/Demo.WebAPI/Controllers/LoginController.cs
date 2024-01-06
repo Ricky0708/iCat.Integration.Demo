@@ -1,5 +1,4 @@
 ﻿using Demo.Shared.enums;
-using Demo.WebAPI.Authorizations;
 using Demo.WebAPI.Models;
 using iCat.Token.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;

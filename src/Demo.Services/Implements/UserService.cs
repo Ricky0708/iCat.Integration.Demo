@@ -33,7 +33,7 @@ namespace Demo.Services.Implements
             {
                 UserId = result.UserId,
                 UserName = result.UserName,
-                Permissions = result.Permissions
+                Permissions = new 
             };
         }
 

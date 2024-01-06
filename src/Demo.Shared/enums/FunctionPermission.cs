@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Shared.enums
 {
-    public enum Function
+    public enum MyFunction
     {
         UserProfile = 1,
         Order = 2,

@@ -3,10 +3,12 @@ using Demo.Repositories.Interfaces;
 using Demo.Services.Implements;
 using Demo.Services.Interfaces;
 using Demo.Shared.Constants;
-using Demo.WebAPI.Authorizations;
+using Demo.Shared.enums;
 using Demo.WebAPI.Middlewares;
 using Demo.WebAPI.Models;
 using Demo.WebAPI.Providers;
+using iCat.Authorization;
+using iCat.Authorization.Extensions;
 using iCat.Cache.Interfaces;
 using iCat.Crypto.Interfaces;
 using iCat.DB.Client.Extension.Web;
@@ -29,7 +31,6 @@ using Microsoft.IdentityModel.Tokens;
 using RabbitMQ.Client;
 using System.Globalization;
 using System.Text;
-
 namespace Demo.WebAPI
 {
     public class Program
@@ -132,21 +133,14 @@ namespace Demo.WebAPI
             var secretKey = "897&*()&@ljlcsfg7w7dflsdkek4f984";
             services.AddScoped<RequestManager>()
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
-                .AddSingleton<IAuthorizationHandler, DemoHandler>()
                 .AddSingleton<IAuthorizationHandler, AuthorizationPermissionsHandler>()
                 .AddSingleton<IAuthorizationMiddlewareResultHandler, DemoAuthorizationMiddlewareResultHandler>()
+                .AddAuthorizationPermission(typeof(MyFunction), typeof(UserProfilePermission), typeof(OrderPermission), typeof(DepartmentPermission))
                 .AddAuthorization(options =>
                 {
-                    //options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                    //.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme, "Bearer")
-                    //.AddRequirements(new DemoRequirement())
-                    //.RequireAuthenticatedUser()
-                    //.Build();
-
-
                     options.DefaultPolicy = new AuthorizationPolicyBuilder()
                         .AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme, "Bearer")
-                        .AddRequirements(new AuthorizationPermissionsRequirement())
+                        .AddAuthorizationPermissionRequirment()
                         .RequireAuthenticatedUser()
                         .Build();
 

@@ -1,4 +1,5 @@
 ﻿using Demo.Shared.enums;
+using iCat.Authorization.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,5 @@ namespace Demo.Repositories.Models
     {
         public int UserId { get; set; }
         public string UserName { get; set; } = "";
-        public DemoPermission Permissions { get; set; }
     }
 }
