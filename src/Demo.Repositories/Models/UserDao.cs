@@ -1,5 +1,4 @@
 ﻿using Demo.Shared.enums;
-using iCat.Authorization.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -3,6 +3,8 @@ using Demo.Repositories.Interfaces;
 using Demo.Services.Interfaces;
 using Demo.Services.Models;
 using Demo.Shared.enums;
+using iCat.Authorization.Models;
+using iCat.Authorization.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 using System.Collections.Generic;
@@ -18,39 +20,85 @@ namespace Demo.Services.Implements
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly FunctionPermissionParser _functionPermissionParser;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, FunctionPermissionParser functionPermissionParser)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _functionPermissionParser = functionPermissionParser ?? throw new ArgumentNullException(nameof(functionPermissionParser));
         }
 
         public UserDto? GetUserById(int userId)
         {
             var result = _userRepository.GetUserById(userId);
+            var userPermissions = _userRepository.GetPermissionsById(userId);
             if (result == null) return null;
 
             return new UserDto
             {
                 UserId = result.UserId,
                 UserName = result.UserName,
-                Permissions = new 
+                Permissions = from p in userPermissions
+                              group p by p.FunctionValue into groupValue
+                              select new FunctionPermissionData
+                              {
+                                  FunctionValue = groupValue.Key,
+                                  FunctionName = groupValue.First().FunctionName,
+                                  PermissionDetails = groupValue.Select(n => new PermissionDetail { PermissionName = n.PermissionName, Permission = n.Permission }).ToList()
+                              }
             };
         }
 
         public ClaimsPrincipal? GetUserClaimsPrincipalById(int userId)
         {
-            var result = _userRepository.GetUserById(userId);
-            if (result == null) return null;
+            var user = _userRepository.GetUserById(userId);
+            var userPermissions = _userRepository.GetPermissionsById(userId);
+            var Permissions = from p in userPermissions
+                              group p by p.FunctionValue into groupValue
+                              select new FunctionPermissionData
+                              {
+                                  FunctionValue = groupValue.Key,
+                                  FunctionName = groupValue.First().FunctionName,
+                                  PermissionDetails = groupValue.Select(n => new PermissionDetail { PermissionName = n.PermissionName, Permission = n.Permission }).ToList()
+                              };
+            if (user == null) return null;
 
             var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.Name, result.UserName));
-            claims.Add(new Claim("UserId", result.UserId.ToString()));
-            claims.Add(new Claim("Permissions", ((long)result.Permissions).ToString()));
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+            claims.Add(new Claim("UserId", user.UserId.ToString()));
+            foreach (var item in Permissions)
+            {
+                claims.Add(_functionPermissionParser.GetClaimFromFunctionPermissionData(item));
+            }
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
             return principal;
+        }
+
+        public List<Claim>? GetUserClaimsById(int userId)
+        {
+            var user = _userRepository.GetUserById(userId);
+            var userPermissions = _userRepository.GetPermissionsById(userId);
+            var Permissions = from p in userPermissions
+                              group p by p.FunctionValue into groupValue
+                              select new FunctionPermissionData
+                              {
+                                  FunctionValue = groupValue.Key,
+                                  FunctionName = groupValue.First().FunctionName,
+                                  PermissionDetails = groupValue.Select(n => new PermissionDetail { PermissionName = n.PermissionName, Permission = n.Permission }).ToList()
+                              };
+            if (user == null) return null;
+
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+            claims.Add(new Claim("UserId", user.UserId.ToString()));
+            foreach (var item in Permissions)
+            {
+                claims.Add(_functionPermissionParser.GetClaimFromFunctionPermissionData(item));
+            }
+            return claims;
         }
     }
 }

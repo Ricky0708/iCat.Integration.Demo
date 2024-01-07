@@ -12,5 +12,6 @@ namespace Demo.Services.Interfaces
     {
         UserDto? GetUserById(int userId);
         ClaimsPrincipal? GetUserClaimsPrincipalById(int userId);
+        List<Claim>? GetUserClaimsById(int userId);
     }
 }

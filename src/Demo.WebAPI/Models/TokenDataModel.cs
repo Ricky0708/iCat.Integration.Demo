@@ -12,6 +12,5 @@ namespace Demo.WebAPI.Models
     {
         public int UserId { get; set; }
         public required string UserName { get; set; }
-        public DemoPermission Permissions { get; set; }
     }
 }

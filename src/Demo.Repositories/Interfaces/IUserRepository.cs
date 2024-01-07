@@ -10,5 +10,6 @@ namespace Demo.Repositories.Interfaces
     public interface IUserRepository
     {
         UserDao? GetUserById(int userId);
+        IEnumerable<UserPermissionDao>? GetPermissionsById(int userId);
     }
 }

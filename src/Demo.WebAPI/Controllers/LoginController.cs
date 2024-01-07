@@ -48,7 +48,6 @@ namespace Demo.WebAPI.Controllers
         [HttpPost(_action)]
         public async Task<IActionResult> Cookie(LoginViewModel loginViewModel)
         {
-
             using (var unitOfWork = _dbClientFactory.GetUnitOfWork("MainDB"))
             {
                 try
@@ -77,24 +76,16 @@ namespace Demo.WebAPI.Controllers
                     return BadRequest(ex.Message);
                 }
             }
-
-
         }
 
         [AllowAnonymous]
         [HttpPost(_action)]
         public async Task<IActionResult> JWT(LoginViewModel loginViewModel)
         {
-            var user = _userService.GetUserById(loginViewModel.UserId);
-            if (user != null)
+            var claims = _userService.GetUserClaimsById(loginViewModel.UserId);
+            if (claims != null)
             {
-                var result = _tokenService.GenerateToken(
-                    new TokenDataModel
-                    {
-                        UserId = user.UserId,
-                        UserName = user.UserName,
-                        Permissions = user.Permissions
-                    });
+                var result = _tokenService.GenerateToken(claims);
                 return await Task.FromResult(Ok(result));
             }
             else
