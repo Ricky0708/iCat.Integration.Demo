@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="iCat.Authorization" Version="1.0.0" />
     <PackageReference Include="iCat.Cache" Version="1.0.0" />
     <PackageReference Include="iCat.Crypto" Version="1.0.0" />
     <PackageReference Include="iCat.DB.Client" Version="2.0.1" />
@@ -25,12 +26,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Demo.Services\Demo.Services.csproj" />
     <ProjectReference Include="..\Demo.Shared\Demo.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="iCat.Authorization">
-      <HintPath>..\..\..\..\Library_Project\iCat.Libraries\iCat.Authorization\src\iCat.Authorization\bin\Debug\net8.0\iCat.Authorization.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
