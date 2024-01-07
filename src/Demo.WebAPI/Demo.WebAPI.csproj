@@ -27,4 +27,10 @@
     <ProjectReference Include="..\Demo.Shared\Demo.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="iCat.Authorization">
+      <HintPath>..\..\..\..\Library_Project\iCat.Libraries\iCat.Authorization\src\iCat.Authorization\bin\Debug\net8.0\iCat.Authorization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

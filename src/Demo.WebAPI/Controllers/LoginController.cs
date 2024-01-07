@@ -1,5 +1,4 @@
 ﻿using Demo.Shared.enums;
-using Demo.WebAPI.Authorizations;
 using Demo.WebAPI.Models;
 using iCat.Token.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -49,24 +48,23 @@ namespace Demo.WebAPI.Controllers
         [HttpPost(_action)]
         public async Task<IActionResult> Cookie(LoginViewModel loginViewModel)
         {
-
             using (var unitOfWork = _dbClientFactory.GetUnitOfWork("MainDB"))
             {
                 try
                 {
-                    await unitOfWork.OpenAsync();
-                    await unitOfWork.BeginTransactionAsync();
+                    //await unitOfWork.OpenAsync();
+                    //await unitOfWork.BeginTransactionAsync();
 
                     var principal = _userService.GetUserClaimsPrincipalById(loginViewModel.UserId);
                     if (principal != null)
                     {
                         await (_httpContextAccessor.HttpContext?.SignInAsync(scheme: CookieAuthenticationDefaults.AuthenticationScheme, principal: principal) ?? Task.CompletedTask);
-                        await unitOfWork.CommitAsync();
+                        //await unitOfWork.CommitAsync();
                         return Ok();
                     }
                     else
                     {
-                        await unitOfWork.RollbackAsync();
+                        //await unitOfWork.RollbackAsync();
                         return BadRequest("{UserNotFound}".AddParams(new { UserId = loginViewModel.UserId }).Localize());
                     }
 
@@ -74,28 +72,20 @@ namespace Demo.WebAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    await unitOfWork.RollbackAsync();
+                    //await unitOfWork.RollbackAsync();
                     return BadRequest(ex.Message);
                 }
             }
-
-
         }
 
         [AllowAnonymous]
         [HttpPost(_action)]
         public async Task<IActionResult> JWT(LoginViewModel loginViewModel)
         {
-            var user = _userService.GetUserById(loginViewModel.UserId);
-            if (user != null)
+            var claims = _userService.GetUserClaimsById(loginViewModel.UserId);
+            if (claims != null)
             {
-                var result = _tokenService.GenerateToken(
-                    new TokenDataModel
-                    {
-                        UserId = user.UserId,
-                        UserName = user.UserName,
-                        Permissions = user.Permissions
-                    });
+                var result = _tokenService.GenerateToken(claims);
                 return await Task.FromResult(Ok(result));
             }
             else

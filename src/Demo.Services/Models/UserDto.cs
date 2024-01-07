@@ -1,4 +1,5 @@
 ﻿using Demo.Repositories.Models;
+using iCat.Authorization.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Demo.Services.Models
 {
     public class UserDto : UserDao
     {
+        public IEnumerable<FunctionPermissionData>? Permissions { get; set; }
     }
 }
