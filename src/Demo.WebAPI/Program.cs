@@ -133,9 +133,8 @@ namespace Demo.WebAPI
             var secretKey = "897&*()&@ljlcsfg7w7dflsdkek4f984";
             services.AddScoped<RequestManager>()
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
-                .AddSingleton<IAuthorizationHandler, AuthorizationPermissionsHandler>()
                 .AddSingleton<IAuthorizationMiddlewareResultHandler, DemoAuthorizationMiddlewareResultHandler>()
-                .AddAuthorizationPermission(typeof(MyFunction), typeof(UserProfilePermission), typeof(OrderPermission), typeof(DepartmentPermission))
+                .AddAuthorizationPermission(typeof(MyFunction))
                 .AddAuthorization(options =>
                 {
                     options.DefaultPolicy = new AuthorizationPolicyBuilder()
