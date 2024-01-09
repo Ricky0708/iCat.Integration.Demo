@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iCat.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,11 @@ namespace Demo.Shared.enums
 {
     public enum MyFunction
     {
+        [Permission(typeof(UserProfilePermission))]
         UserProfile = 1,
+        [Permission(typeof(OrderPermission))]
         Order = 2,
+        [Permission(typeof(DepartmentPermission))]
         Department = 3
     }
 

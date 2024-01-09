@@ -20,12 +20,12 @@ namespace Demo.Services.Implements
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly FunctionPermissionParser _functionPermissionParser;
+        private readonly IFunctionPermissionProvider _functionPermissionProvider;
 
-        public UserService(IUserRepository userRepository, FunctionPermissionParser functionPermissionParser)
+        public UserService(IUserRepository userRepository, IFunctionPermissionProvider functionPermissionProvider)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            _functionPermissionParser = functionPermissionParser ?? throw new ArgumentNullException(nameof(functionPermissionParser));
+            _functionPermissionProvider = functionPermissionProvider ?? throw new ArgumentNullException(nameof(functionPermissionProvider));
         }
 
         public UserDto? GetUserById(int userId)
@@ -68,7 +68,7 @@ namespace Demo.Services.Implements
             claims.Add(new Claim("UserId", user.UserId.ToString()));
             foreach (var item in Permissions)
             {
-                claims.Add(_functionPermissionParser.GetClaimFromFunctionPermissionData(item));
+                claims.Add(_functionPermissionProvider.GetClaimFromFunctionPermissionData(item));
             }
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -96,7 +96,7 @@ namespace Demo.Services.Implements
             claims.Add(new Claim("UserId", user.UserId.ToString()));
             foreach (var item in Permissions)
             {
-                claims.Add(_functionPermissionParser.GetClaimFromFunctionPermissionData(item));
+                claims.Add(_functionPermissionProvider.GetClaimFromFunctionPermissionData(item));
             }
             return claims;
         }
