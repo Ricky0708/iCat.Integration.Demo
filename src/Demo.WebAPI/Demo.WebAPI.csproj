@@ -8,6 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="iCat.Authorization" Version="1.1.2" />
 		<PackageReference Include="iCat.Cache" Version="1.0.0" />
 		<PackageReference Include="iCat.Crypto" Version="1.0.0" />
 		<PackageReference Include="iCat.DB.Client" Version="2.0.1" />
@@ -20,11 +21,6 @@
 		<PackageReference Include="iCat.Token.JWT" Version="1.0.0" />
 		<PackageReference Include="iCat.Worker" Version="1.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
-	</ItemGroup>
-	<ItemGroup>
-		<Reference Include="iCat.Authorization">
-			<HintPath>..\..\..\iCat.Libraries\released\iCat.Authorization.dll</HintPath>
-		</Reference>
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Demo.Services\Demo.Services.csproj" />
