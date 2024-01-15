@@ -7,13 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="iCat.Authorization" Version="1.0.2" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Demo.Repositories\Demo.Repositories.csproj" />
   </ItemGroup>
-
+	<ItemGroup>
+		<Reference Include="iCat.Authorization">
+			<HintPath>..\..\..\iCat.Libraries\released\iCat.Authorization.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
 </Project>

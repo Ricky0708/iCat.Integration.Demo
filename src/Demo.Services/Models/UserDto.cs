@@ -10,6 +10,6 @@ namespace Demo.Services.Models
 {
     public class UserDto : UserDao
     {
-        public IEnumerable<FunctionPermissionData>? Permissions { get; set; }
+        public IEnumerable<Permit>? Permissions { get; set; }
     }
 }

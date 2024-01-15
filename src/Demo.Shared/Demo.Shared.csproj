@@ -6,7 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="iCat.Authorization" Version="1.0.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="iCat.Authorization">
+	    <HintPath>..\..\..\iCat.Libraries\released\iCat.Authorization.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 </Project>
