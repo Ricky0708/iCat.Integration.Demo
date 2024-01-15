@@ -21,12 +21,12 @@ namespace Demo.WebAPI.Models
         private HttpContext _context;
         private readonly IUserService _userService;
         private readonly ITokenService<TokenDataModel> _tokenService;
-        private readonly IFunctionPermissionProvider _userPermissionProvider;
+        private readonly IPermitProvider _permitProvider;
 
         public string? RequestId => _context.Items["RequestId"]?.ToString();
         public string? UserName => _context.User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.Name)?.Value;
         public int? UserId => int.TryParse(_context.User.Claims.FirstOrDefault(p => p.Type == "UserId")?.Value, out var _userId) ? _userId : null;
-        public IEnumerable<FunctionPermissionData> Permissions => _userPermissionProvider.GetUserPermission();
+        public IEnumerable<Permit> Permissions => _permitProvider.GetPermit();
 
 
         private Lazy<UserDto?> UserData => new(() => (UserId == null ? null : _userService.GetUserById(UserId.Value)));
@@ -35,13 +35,13 @@ namespace Demo.WebAPI.Models
             IHttpContextAccessor httpContextAccessor,
             IUserService userService,
             ITokenService<TokenDataModel> tokenService,
-            IFunctionPermissionProvider userPermissionProvider
+            IPermitProvider permitProvider
             )
         {
             _context = httpContextAccessor.HttpContext!;
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
             _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
-            _userPermissionProvider = userPermissionProvider ?? throw new ArgumentNullException(nameof(userPermissionProvider));
+            _permitProvider = permitProvider ?? throw new ArgumentNullException(nameof(permitProvider));
         }
     }
 }

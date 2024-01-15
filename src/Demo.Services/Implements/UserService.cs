@@ -20,12 +20,14 @@ namespace Demo.Services.Implements
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IFunctionPermissionProvider _functionPermissionProvider;
+        private readonly IPermitProvider _permitProvider;
+        private readonly IPermissionProvider _permissionProvider;
 
-        public UserService(IUserRepository userRepository, IFunctionPermissionProvider functionPermissionProvider)
+        public UserService(IUserRepository userRepository, IPermitProvider permitProvider, IPermissionProvider permissionProvider)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            _functionPermissionProvider = functionPermissionProvider ?? throw new ArgumentNullException(nameof(functionPermissionProvider));
+            _permitProvider = permitProvider ?? throw new ArgumentNullException(nameof(permitProvider));
+            _permissionProvider = permissionProvider ?? throw new ArgumentNullException(nameof(permissionProvider));
         }
 
         public UserDto? GetUserById(int userId)
@@ -40,11 +42,11 @@ namespace Demo.Services.Implements
                 UserName = result.UserName,
                 Permissions = from p in userPermissions
                               group p by p.FunctionValue into groupValue
-                              select new FunctionPermissionData
+                              select new Permit
                               {
-                                  FunctionValue = groupValue.Key,
-                                  FunctionName = groupValue.First().FunctionName,
-                                  PermissionDetails = groupValue.Select(n => new PermissionDetail { PermissionName = n.PermissionName, Permission = n.Permission }).ToList()
+                                  Value = groupValue.Key,
+                                  Name = groupValue.First().FunctionName,
+                                  PermissionsData = groupValue.Select(n => new Permission { Name = n.PermissionName, Value = n.Permission }).ToList()
                               }
             };
         }
@@ -55,11 +57,11 @@ namespace Demo.Services.Implements
             var userPermissions = _userRepository.GetPermissionsById(userId);
             var Permissions = from p in userPermissions
                               group p by p.FunctionValue into groupValue
-                              select new FunctionPermissionData
+                              select new Permit
                               {
-                                  FunctionValue = groupValue.Key,
-                                  FunctionName = groupValue.First().FunctionName,
-                                  PermissionDetails = groupValue.Select(n => new PermissionDetail { PermissionName = n.PermissionName, Permission = n.Permission }).ToList()
+                                  Value = groupValue.Key,
+                                  Name = groupValue.First().FunctionName,
+                                  PermissionsData = groupValue.Select(n => new Permission { Name = n.PermissionName, Value = n.Permission }).ToList()
                               };
             if (user == null) return null;
 
@@ -68,7 +70,7 @@ namespace Demo.Services.Implements
             claims.Add(new Claim("UserId", user.UserId.ToString()));
             foreach (var item in Permissions)
             {
-                claims.Add(_functionPermissionProvider.GetClaimFromFunctionPermissionData(item));
+                claims.Add(_permitProvider.GeneratePermitClaim(item));
             }
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -83,11 +85,11 @@ namespace Demo.Services.Implements
             var userPermissions = _userRepository.GetPermissionsById(userId);
             var Permissions = from p in userPermissions
                               group p by p.FunctionValue into groupValue
-                              select new FunctionPermissionData
+                              select new Permit
                               {
-                                  FunctionValue = groupValue.Key,
-                                  FunctionName = groupValue.First().FunctionName,
-                                  PermissionDetails = groupValue.Select(n => new PermissionDetail { PermissionName = n.PermissionName, Permission = n.Permission }).ToList()
+                                  Value = groupValue.Key,
+                                  Name = groupValue.First().FunctionName,
+                                  PermissionsData = groupValue.Select(n => new Permission { Name = n.PermissionName, Value = n.Permission }).ToList()
                               };
             if (user == null) return null;
 
@@ -96,7 +98,7 @@ namespace Demo.Services.Implements
             claims.Add(new Claim("UserId", user.UserId.ToString()));
             foreach (var item in Permissions)
             {
-                claims.Add(_functionPermissionProvider.GetClaimFromFunctionPermissionData(item));
+                claims.Add(_permitProvider.GeneratePermitClaim(item));
             }
             return claims;
         }
