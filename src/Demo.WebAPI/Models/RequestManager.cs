@@ -21,12 +21,12 @@ namespace Demo.WebAPI.Models
         private HttpContext _context;
         private readonly IUserService _userService;
         private readonly ITokenService<TokenDataModel> _tokenService;
-        private readonly IPermitProvider _permitProvider;
+        private readonly IPermitClaimProcessor _permitProvider;
 
         public string? RequestId => _context.Items["RequestId"]?.ToString();
         public string? UserName => _context.User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.Name)?.Value;
         public int? UserId => int.TryParse(_context.User.Claims.FirstOrDefault(p => p.Type == "UserId")?.Value, out var _userId) ? _userId : null;
-        public IEnumerable<Permit> Permissions => _permitProvider.GetPermit();
+        public IEnumerable<Permit> Permissions => _permitProvider.GetPermits();
 
 
         private Lazy<UserDto?> UserData => new(() => (UserId == null ? null : _userService.GetUserById(UserId.Value)));
@@ -35,7 +35,7 @@ namespace Demo.WebAPI.Models
             IHttpContextAccessor httpContextAccessor,
             IUserService userService,
             ITokenService<TokenDataModel> tokenService,
-            IPermitProvider permitProvider
+            IPermitClaimProcessor permitProvider
             )
         {
             _context = httpContextAccessor.HttpContext!;
