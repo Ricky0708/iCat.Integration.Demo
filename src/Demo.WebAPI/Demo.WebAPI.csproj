@@ -8,19 +8,19 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="iCat.Authorization" Version="1.1.2" />
+		<PackageReference Include="iCat.Authorization" Version="1.3.4" />
 		<PackageReference Include="iCat.Cache" Version="1.0.0" />
 		<PackageReference Include="iCat.Crypto" Version="1.0.0" />
-		<PackageReference Include="iCat.DB.Client" Version="2.0.1" />
-		<PackageReference Include="iCat.DB.Client.Extension.Web" Version="1.1.4" />
-		<PackageReference Include="iCat.DB.Client.Factory" Version="2.0.1" />
+		<PackageReference Include="iCat.DB.Client" Version="2.0.2" />
+		<PackageReference Include="iCat.DB.Client.Extension.Web" Version="1.1.5" />
+		<PackageReference Include="iCat.DB.Client.Factory" Version="2.0.2" />
 		<PackageReference Include="iCat.Localization.Extension.Web" Version="1.0.2" />
 		<PackageReference Include="iCat.Logger.Extension" Version="1.0.0" />
 		<PackageReference Include="iCat.RabbitMQ" Version="1.0.0" />
 		<PackageReference Include="iCat.Token" Version="1.0.0" />
 		<PackageReference Include="iCat.Token.JWT" Version="1.0.0" />
 		<PackageReference Include="iCat.Worker" Version="1.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Demo.Services\Demo.Services.csproj" />

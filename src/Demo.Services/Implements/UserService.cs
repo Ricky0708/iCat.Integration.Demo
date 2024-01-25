@@ -20,10 +20,10 @@ namespace Demo.Services.Implements
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IPermitProvider _permitProvider;
+        private readonly IPermitClaimProcessor _permitProvider;
         private readonly IPermissionProvider _permissionProvider;
 
-        public UserService(IUserRepository userRepository, IPermitProvider permitProvider, IPermissionProvider permissionProvider)
+        public UserService(IUserRepository userRepository, IPermitClaimProcessor permitProvider, IPermissionProvider permissionProvider)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _permitProvider = permitProvider ?? throw new ArgumentNullException(nameof(permitProvider));
